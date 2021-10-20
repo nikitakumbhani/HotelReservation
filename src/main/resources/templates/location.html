@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Location - NikitaKumbhaniJava</title>
+
+<script th:src="@{https://kit.fontawesome.com/d82da44153.js}"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
+
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet"
+	
+	crossorigin="anonymous">
+	<script src="javascripts/jquery.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbiL4II3XyPldeYVJBSnyiofBIdSyeN8g"></script>
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtUHnjr8aQIE3SoAg-K3250h9Lx29uYQM&callback=initMap"
+      async
+    ></script>
+<script>
+      // Initialize and add the map
+      function initMap() {
+        // The location of Uluru
+        const uluru = { lat: 40.868778, lng:-74.422218 };
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom:10,
+          center: uluru,
+        });
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+        });
+      }
+    </script>
+</head>
+<body onload = "GFG()">
+	<header th:insert="fragments/header.html :: header"> </header>
+	<div class="container">
+		<!-- <div>
+			<img class=" container img-fluid  p-3"
+				th:src="@{/images/HotelHome1.jfif}" alt="hotel" />
+		</div> -->
+		<div class="row mt-5">
+			<div class=" col-md-8 ">
+				<div class="mb-3 h2 text-dark">
+					<i class="fas fa-map-marker-alt"></i> Location
+				</div>
+				<div class="text-secondary h5">1100 Parsippany Blvd,
+					Parsippany, NJ-07054</div>
+
+			</div>
+			<div class="h5 col-md-4 ">
+				<div class="mb-3 h2 text-dark">Contact Us</div>
+				<div class="text-secondary h5">
+					<i class="fas fa-phone-alt"></i> +1 987-654-4321
+				</div>
+				<div class="text-secondary h5">
+					<i class="far fa-envelope"></i>&nbsp;<a href="mailto:kumbhanin1@montclair.edu">kumbhanin1@montclair.edu</a>
+				</div>
+			</div>
+		</div>
+
+<div id="map" style="width: 1000px; height: 300px;" class="my-5"></div>
+<script type="text/javascript">
+  $(function() {
+    $("#map").googleMap();
+    $("#map").addMarker({
+    	address: "1100 parsippany 07054", // Postal address
+    	draggable: true,
+    	success: function(e) {
+    	    $("#latitude").val(e.lat);
+    	    $("#longitude").val(e.lon);
+    	}
+	});
+  })
+</script>	 
+	</div>
+
+		<footer th:insert="fragments/footer.html :: footer"> </footer>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Reservation Summary & Guest Information -
+	NikitaKumbhaniJava</title>
+<script src="https://kit.fontawesome.com/d82da44153.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+
+	<div class="container p-5 ">
+		<div class="row border border-info">
+			<div class="col-md-4 bg-info text-white">
+				<h1 class="pt-4 text-center">Reservation Summary</h1>
+				<hr color="white" />
+
+
+				<div th:each="searchRequest:${SearchRequestDetails}" class="mt-5">
+					<div class="row col-md-12 text-left h6">
+						<div class="col-md-6">
+							<label>Check-in Date</label>
+						</div>
+						<div class="col-md-6">
+							<label th:text="${searchRequest.arrivaldate}"></label>
+						</div>
+					</div>
+					<div class="row col-md-12 text-left h6">
+						<div class="col-md-6">
+							<label>Check-out Date</label>
+						</div>
+						<div class="col-md-6">
+							<label th:text="${searchRequest.departuredate}"></label>
+						</div>
+					</div>
+
+					<div th:each="room:${roomDetails}">
+
+
+						<div class="row col-md-12 text-left h6">
+							<div class="col-md-6">
+								<label>No Of Adults</label>
+							</div>
+							<div class="col-md-6">
+								<label th:text="${searchRequest.adults}"></label>
+							</div>
+						</div>
+						<div class="row col-md-12 text-left h6">
+							<div class="col-md-6">
+								<label>No Of children</label>
+							</div>
+							<div class="col-md-6">
+								<label th:text="${searchRequest.children}"></label>
+							</div>
+						</div>
+						<div class="row col-md-12 text-left h6">
+							<div class="col-md-6">
+								<label>No Of Rooms</label>
+							</div>
+							<div class="col-md-6">
+								<label th:text="${searchRequest.rooms}"></label>
+							</div>
+						</div>
+						<div class="row col-md-12 text-left h6">
+							<div class="col-md-6">
+								<label>Price/Night</label>
+							</div>
+							<div class="col-md-6">
+								$ <label th:text="${room.roomrate}"></label>
+							</div>
+						</div>
+						<div class="row col-md-12 text-left h6">
+							<div class="col-md-6">
+								<label>Tax</label>
+							</div>
+							<div class="col-md-6">5%</div>
+						</div>
+						<div class="row col-md-12 text-left h6">
+							<div class="col-md-6">
+								<label>Total Cost</label>
+							</div>
+							<div class="col-md-6">
+								$ <label
+									th:with="varroomrate = ${room.roomrate}, 
+									noOfDays = ${searchRequest.noOfDays},
+									varrooms = ${searchRequest.rooms}, 
+									cost = ${varroomrate * varrooms * noOfDays}, costwithtax=${cost * 0.05}, totalcost=${cost+costwithtax}	">
+									<span th:text="${totalcost}"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-8 text-info bg-white mt-4">
+				<div class="text-center mt-3 h5" th:if="${session.isUserLoggedIn}">
+				</div>
+				<div class="text-center my-3 h6" style="color: black"
+					th:unless="${session.isUserLoggedIn}">
+					Already member at NikitaKumbhaniJAVA Hotel? <br /> <a
+						href="/login?id=guest">click here</a> to Login/Register to
+					checkout.
+				</div>
+				<h1 class="pt-3 pb-4  text-center border border-bottom-info">Guest
+					Information</h1>
+
+				<div class="form justify-content-center ">
+					<form class="form justify-content-center ml-5 pl-5" method="post"
+						th:object="${guestinfo}" th:action="@{/confirm}">
+
+						<div class="form-group form-group-md col-sm-7 ">
+							<label class="mt-5">First Name</label> <input
+								class="form-control" value="${firstname}" type="text"
+								th:field="*{firstname}" required>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>Last Name</label> <input class="form-control"
+								value="${lastname}" type="text" th:field="*{lastname}" required>
+						</div>
+						<div class=" form-group form-group-md col-sm-7">
+							<label>Gender</label> <select name="gender" th:field="*{gender}"
+								class="form-control" required>
+								<option value="">Choose...</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+							</select>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>Street</label> <input class="form-control " type="text"
+								th:field="*{street}" required>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+
+							<label>City</label> <input class="form-control " type="text"
+								th:field="*{city}" required>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>State</label> <select id="state" class="form-control "
+								th:field="*{state}" required>
+								<option value="">Choose State</option>
+								<option value="NJ">New Jersey</option>
+								<option value="NY">New York</option>
+								<option value="California">California</option>
+								<option value="Texas">Texas</option>
+							</select>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>Country</label> <select id="country" class="form-control "
+								th:field="*{country}" required>
+								<option value="">Choose Country</option>
+
+								<option value="US">United States</option>
+							</select>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>Phone</label> <input class="form-control " type="text"
+								th:field="*{phone}" required>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>Email</label> <input class="form-control " type="text"
+								th:field="*{email}" required>
+
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>Payment Method</label> <select id="paymentMethod"
+								class="form-control " th:field="*{paymentMethod}" required>
+								<option value="">Choose Payment Method</option>
+								<option value="VISA">VISA</option>
+								<option value="MASTERCARD">MASTERCARD</option>
+								<option value="AMEX">AMEX</option>
+								<option value="Discover">Discover</option>
+							</select>
+						</div>
+						<div class="form-group form-group-md col-sm-7">
+							<label>Card Number</label> <input th:minlenght="16"
+								th:maxlength="16" class="form-control " type="text"
+								th:field="*{cardNumber}" required>
+
+						</div>
+						<div class="form-group form-group-md col-sm-7"
+							th:if="${session.isUserLoggedIn}">
+							<button type="submit" name="reserve" value="reserve"
+								class="btn btn-success" th:disabled="false">Complete
+								Reservation</button>
+						</div>
+						<div class="form-group form-group-md col-sm-7"
+							th:unless="${session.isUserLoggedIn}">
+							<button type="submit" name="reserve" value="reserve"
+								class="btn btn-success" th:disabled="true">Complete
+								Reservation</button>
+
+						</div>
+					</form>
+
+					<div class="mt-5 text-secondary">
+						<p>The collected data is processed by NikitaKumbhaniJAVA's
+							Hotel for the purposes of managing your bookings and stays,
+							getting to know you better, improving the quality of our service
+							and your customer experience, and sending you information on
+							NikitaKumbhaniJAVA Hotel services.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Dining Page - NikitaKumbhaniJava</title>
+
+<script src="https://kit.fontawesome.com/d82da44153.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet"
+	crossorigin="anonymous">
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+
+	<div class="container">
+		<div class="text-center m-3 text-secondary h1 ">Welcome to our
+			Restaurant</div>
+		<div class="row border border-secondary">
+
+			<div class="col-4 tp-3   bg-dark text-light  ">
+
+				<div class="m-5 bg-dark text-light h5">
+					Hotel Restaurants Serves:
+					<ul class="list-group mt-5 h6 unstyle">
+						<li class="list-group-item list-group-item-light "><i
+							class="fas fa-coffee"></i> Breakfast</li>
+						<li class="list-group-item list-group-item-dark"><i
+							class="fas fa-stroopwafel"></i> Brunch</li>
+						<li class="list-group-item list-group-item-light"><i
+							class="fas fa-hamburger"></i> Lunch</li>
+						<li class="list-group-item list-group-item-dark"><i
+							class="fas fa-pizza-slice"></i> Dinner</li>
+						<li class="list-group-item list-group-item-light"><i
+							class="fas fa-ice-cream"></i> Dessert</li>
+					</ul>
+
+
+				</div>
+
+
+				<div class="m-4 mb-3  text-light">
+					Click <a href="/menu">here </a>to view our Menu.
+				</div>
+				<div class="m-4 mt-5">Hours of Operation: 11:00 AM-11:00 PM</div>
+				<div class="m-4">Room Service Available</div>
+				<div class="m-4">6:30 AM - 10:00 PM</div>
+				<div class="m-4">Hours of Operation: 12:00 PM - 1:00 AM</div>
+			</div>
+
+
+			<div class="col-8  border border-secondary p-3">
+
+				<img class="img-fluid" th:src="@{/images/dining4.jpg}" alt="food">
+				<div class="m-5 p-1  ">We invite you to experience fine dining
+					service. Our full service bar is equipped with multiple TV screen
+					for all sporting events. Their sangria bar offers 8 various flavors
+					and a private wine room.</div>
+
+			</div>
+
+		</div>
+	</div>
+
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+
+</body>
+</html>

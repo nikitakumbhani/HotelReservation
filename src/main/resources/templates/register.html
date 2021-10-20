@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Register - NikitaKumbhaniJava</title>
+<script src="https://kit.fontawesome.com/d82da44153.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$.validator
+				.addMethod(
+						'customphone',
+						function(value, element) {
+							return this.optional(element)
+									|| /(?:\d(?:\(\d{3}\)|-\d{3})-\d{3}-(?:\d{2}-\d{2}|\d{4})|\d{10})$/
+											.test(value);
+						}, "Please enter a valid phone number");
+
+		// Initialize form validation on the registration form.
+		// It has the name attribute "registration"
+		$("form[name='registration']")
+				.validate(
+						{
+							// Specify validation rules
+							rules : {
+								// The key name on the left side is the name attribute
+								// of an input field. Validation rules are defined
+								// on the right side
+								firstname : "required",
+								lastname : "required",
+								username : "required",
+								gender : "required",
+								dateofbirth : "required",
+								phone : 'customphone',
+								street : "required",
+								city : "required",
+								state : "required",
+								country : "required",
+								email : {
+									required : true,
+									// Specify that email should be validated
+									// by the built-in "email" rule
+									email : true
+								},
+								password : {
+									required : true,
+									minlength : 5
+								}
+							},
+							// Specify validation error messages
+							messages : {
+								firstname : "Please enter your firstname",
+								lastname : "Please enter your lastname",
+								username : "Please enter your usename",
+								gender : "Please select your gender",
+								dateofbirth : "Please select your date of birth",
+								phone : "Please enter your 10 digit phone number",
+								street : "Please enter your street address",
+								city : "Please enter your city",
+								state : "Please enter your state",
+								country : "Please enter your country",
+								password : {
+									required : "Please provide a password",
+									minlength : "Your password must be at least 5 characters long"
+								},
+								email : "Please enter a valid email address"
+							},
+							highlight : function(element, errorClass,
+									validClass) {
+								$(element).addClass(errorClass).removeClass(
+										validClass);
+								//$(element.form).find("label[for=" + element.name + "]")
+								//.addClass(errorClass);
+								$('label.error').css('color', 'red');
+								//$('.error').css('border-color', 'red');
+							},
+							unhighlight : function(element, errorClass,
+									validClass) {
+								$(element).removeClass(errorClass).addClass(
+										validClass);
+								$(element.form).find(
+										"label[for=" + element.name + "]")
+										.removeClass(errorClass);
+								//$('.error').css('border-color', 'black');
+							},
+							// Make sure the form is submitted to the destination defined
+							// in the "action" attribute of the form when valid
+							submitHandler : function(form) {
+								form.submit();
+							}
+						});
+	});
+</script>
+
+</head>
+<body class="card">
+	<header th:insert="fragments/header.html :: header"> </header>
+
+	<div class="container">
+		<h1 class="my-5 text-secondary text-center">
+			Join NikitaKumbhaniJAVA<span>&#174;</span> Hotel Club By Registering
+		</h1>
+		<form method="post" name="registration" th:object="${register}"
+			th:action="@{/register}" class="needs-validation container ml-5">
+			<div class="row">
+				<div class="col-6 form-group">
+					<label for="firstname">First Name</label> <input
+						class="form-control col-sm-9" name="firstname" type="text"
+						th:field="*{firstname}">
+				</div>
+				<div class=" col-6 form-group">
+					<label for="lastname">Last Name</label> <input name="lastname"
+						class="form-control col-sm-9" th:field="*{lastname}" type="text">
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-6 form-group">
+					<label for="username ">User Name</label> <input
+						class="form-control col-sm-9" name="username"
+						th:field="*{username}" type="text">
+				</div>
+				<div class="col-6 form-group">
+					<label for="password">Password</label> <input name="password"
+						class=" col-sm-9 form-control" th:field="*{password}"
+						type="password" required>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class=" col-6 form-group">
+					<label for="gender">Gender</label> <select name="gender"
+						th:field="*{gender}" class=" col-sm-9 form-control" required>
+						<option value=" ">Choose...</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+				</div>
+				<div class=" col-6 form-group">
+					<label for="dateofbirth">Date Of Birth</label> <input
+						th:field="*{dateofbirth}" class="form-control col-sm-9"
+						type="date" required>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-6 form-group">
+					<label for="phone">Phone</label> <input
+						class="form-control col-sm-9" th:field="*{phone}" type="text"
+						required>
+				</div>
+				<div class=" col-6 form-group">
+					<label for="email">Email</label> <input name="email"
+						class="form-control col-sm-9" th:field="*{email}" type="text"
+						required>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-6 form-group">
+					<label for="street">Street</label> <input name="street"
+						class="form-control col-sm-9" th:field="*{street}" type="text"
+						required>
+				</div>
+				<div class=" col-6 form-group">
+					<label for="city">City</label> <input name="city"
+						class="form-control col-sm-9" th:field="*{city}" type="text"
+						required>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-6 form-group">
+					<label for="state">State</label> <input name="state"
+						class="form-control col-sm-9" th:field="*{state}" type="text"
+						required>
+				</div>
+
+				<div class=" col-6 form-group">
+					<label for="country">Country</label> <input name="country"
+						class="form-control col-sm-9" th:field="*{country}" type="text"
+						required>
+				</div>
+			</div>
+			<div class=" my-5">
+				<button type="submit" name="submit" class="btn btn-success">Register</button>
+				<button type="reset" name="reset" class="btn btn-primary">Clear</button>
+			</div>
+		</form>
+	</div>
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+
+
+</body>
+</html>

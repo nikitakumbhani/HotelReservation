@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Home Page - NikitaKumbhaniJava</title>
+
+<script src="https://kit.fontawesome.com/d82da44153.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('#reservationId').attr('value', '');
+
+		$("#fromDate").datepicker({
+			minDate : 0,
+			dateFormat : "mm-dd-yy"
+		}).datepicker('setDate', new Date());
+		$("#toDate").datepicker({
+			minDate : 1,
+			dateFormat : "mm-dd-yy"
+		}).datepicker('setDate', '+1');
+
+		$("#fromDate").on("change", function() {
+			var fromDate = $(this).datepicker('getDate', '+1d');
+			fromDate.setDate(fromDate.getDate() + 1);
+
+			var todayDay = $.datepicker.formatDate('dd', new Date());
+			$("#toDate").datepicker('destroy');
+			$("#toDate").datepicker({
+				minDate : fromDate.getDate() - todayDay,
+				dateFormat : "mm-dd-yy"
+			}).datepicker('setDate', fromDate.getDate() - todayDay);
+		});
+
+		//$( "#fromDate" ).datepicker( "option", "dateFormat", $( this ).val() );
+		//$( "#toDate" ).datepicker( "option", "dateFormat", $( this ).val() );
+
+		var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
+		var tomday = tomorrow.getDate();
+		var tommonth = tomorrow.getMonth() + 1;
+		var tomyear = tomorrow.getFullYear();
+		if (tomday < 10) {
+			tomday = '0' + tomday
+		}
+		if (tommonth < 10) {
+			tommonth = '0' + tommonth
+		}
+		tomorrow = tomyear + '-' + tommonth + '-' + tomday;
+
+		var nextDay = new Date();
+		nextDay.setDate(nextDay.getDate() + 2);
+
+		var nextday = nextDay.getDate();
+		var nextmonth = nextDay.getMonth() + 1;
+		var nextyear = nextDay.getFullYear();
+		if (nextday < 10) {
+			nextday = '0' + nextday
+		}
+		if (nextmonth < 10) {
+			nextmonth = '0' + nextmonth
+		}
+		nextDay = nextyear + '-' + nextmonth + '-' + nextday;
+
+		$('#arrivaldate').attr('value', tomorrow);
+		$('#departuredate').attr('value', nextDay);
+
+		console.log(tomorrow);
+		console.log(nextDay);
+
+		//$('#ad').val(new Date());
+	});
+</script>
+
+<script type="text/javascript">
+	function checkDate() {
+		var EnteredDate = document.getElementById("arrivaldate").value; //for javascript
+
+		// var EnteredDate = $("#arrivaldate").val(); // For JQuery
+
+		var date = EnteredDate.substring(0, 2);
+		var month = EnteredDate.substring(3, 5);
+		var year = EnteredDate.substring(6, 10);
+
+		var myDate = new Date(year, month - 1, date);
+
+		var today = new Date();
+
+		if (myDate < today) {
+			alert("Arrival date should greter than today's Date");
+		}
+	}
+</script>
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+	<div class="container mb-5">
+
+		<div
+			class="my-5 p-3 h5 text-center bg-light text-success border border-primary"
+			th:if="${isReservationComplete}">Thank you!! You are
+			successfully registered. Please login to book your room.</div>
+		<form th:action="@{/SearchRoom}" th:object="${search}" method="post"
+			name="reserve" class="form-horizontal p-3 needs-validation">
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<label class="control-label m-2">Check-in</label> <input
+						th:id="fromDate" th:field="*{arrivaldate}" class="form-control "
+						type="text" id="arrivaldate" name="arrivaldate">
+					<div class="invalid-feedback">Please select arrival date.</div>
+				</div>
+				<div class="form-group col-md-2">
+					<label class="control-label m-2">Check-out</label> <input
+						th:id="toDate" class="form-control " id='departuredate'
+						type="text" th:field="*{departuredate}">
+				</div>
+				<div class="form-group col-md-2">
+					<label class="control-label m-2">Rooms</label> <select
+						th:field="*{rooms}" class="form-control" required>
+						<option th:value="1" th:text="1"></option>
+						<option th:value="2" th:text="2"></option>
+						<option th:value="3" th:text="3"></option>
+						<option th:value="4" th:text="4"></option>
+						<option th:value="5" th:text="5"></option>
+					</select>
+				</div>
+				<div class="form-group col-md-2">
+					<label class="control-label m-2">Adults</label> <select
+						th:field="*{adults}" class="form-control" required>
+						<option th:value="1" th:text="1"></option>
+						<option th:value="2" th:text="2"></option>
+						<option th:value="3" th:text="3"></option>
+						<option th:value="4" th:text="4"></option>
+					</select>
+				</div>
+				<div class="form-group col-md-2">
+					<label class="control-label m-2">Children</label> <select
+						th:field="*{children}" class="form-control" required>
+						<option th:value="0" th:text="0"></option>
+						<option th:value="1" th:text="1"></option>
+						<option th:value="2" th:text="2"></option>
+						<option th:value="3" th:text="3"></option>
+						<option th:value="4" th:text="4"></option>
+
+					</select>
+				</div>
+				<div class="form-group col-md-2">
+					<button class="btn btn-success active form-control m-3  w-100 h-75"
+						type="submit" onclick="checkDate();">Check availability</button>
+				</div>
+			</div>
+		</form>
+
+		<div>
+			<img class="img-fluid" th:src="@{/images/HotelHome11.jpg}"
+				style="width: 156%; height: 450px;" alt="hotel" />
+		</div>
+		<div class="text-center h1 my-5">OUR FEATURED AMENITIES</div>
+		<div class="row ml-5">
+
+			<div
+				class="col-2  bg-light border rounded border-secondory  m-1 text-center p-3">
+				<i class="fa fa-wifi"></i>
+				<div class="my-3">Free Wi-Fi</div>
+			</div>
+			<div
+				class="col-2 border rounded border-secondory  m-1 text-center p-3">
+				<i class="fa fa-car"></i>
+				<div class="my-3">Free Parking</div>
+			</div>
+			<div
+				class="col-2 bg-light border rounded border-secondory  m-1 text-center p-3">
+				<i class="fa fa-coffee"></i>
+				<div class="my-3">Free Breakfast</div>
+			</div>
+			<div
+				class="col-2 border rounded border-secondory  m-1 text-center p-3">
+				<i class="fas fa-swimmer"></i>
+				<div class="my-3">Outdoor Pool</div>
+			</div>
+			<div
+				class="col-2 bg-light border rounded border-secondory  m-1 text-center p-3">
+				<i class="fa fa-smoking-ban"></i>
+				<div class="my-3">Non-Smoking Rooms</div>
+			</div>
+
+
+
+		</div>
+		<div class="h4 text-center p-5 m-5">At Nikita's Hotel, our
+			family of brands is as diverse as we are. From everyday, essential
+			travel to luxury escapes, find a collection of welcoming experiences.
+			For wherever you go. For however you stay.</div>
+		<div class="media tm-1 ">
+			<img class="mr-3" th:src="@{/images/HotelHome9.jpg}" alt="hotel" />
+			<div class="media-body mx-2 justify-content-center">
+				<label class="h4 mb-3 text-info" style="margin-top:120px"> Find Your Reservation Details</label>
+				<form class="form needs-validation " th:action="@{/viewreservation}"
+					th:object="${reservation}" method="post" name="reserve">
+					<input type="text" th:field="*{reservationId}"
+						placeholder="Enter Reservation Number" id="reservationId"
+						name="no" class="form-control mt-1" required>
+					<div class="invalid-feedback">Please enter your Reservation
+						Number!</div>
+					<button type="submit" class="btn btn-success text-center mt-3">View
+						Details</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+</body>
+</html>

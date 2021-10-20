@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>My Spa - NikitaKumbhaniJava</title>
+
+
+<script src="https://kit.fontawesome.com/d82da44153.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+	<div>
+		<img class="img-fluid" th:src="@{/images/spa/sparoom.jpg}"
+			style="width: 156%; height: 450px;" alt="hotel" />
+	</div>
+	<div class="row text-secondary"
+		th:style="'background: url(/images/spa/spa7.jpg)  ;'">
+		<div class="col-2"></div>
+		<div class="col-8">
+			<div class="mt-5 h3">Pamper Yourself at</div>
+			<div class="my-1 h1">Our Sumptuous Nikita's Hotel Spa</div>
+			<div class="mb-5 mt-2 h5 ml-5 container">Sophisticated and
+				chic, yet welcoming and unpretentious, Our Spa offers a fresh
+				approach to the hotel spa experience, just what you’d expect from
+				our Nikita's luxury hotel. Inspired by treatments from around the
+				globe, Our Spa services work and are delivered with exceptional
+				service by caring and friendly spa specialists, who set the stage
+				for a personal journey towards better health.</div>
+		</div>
+		<div class="col-2"></div>
+	</div>
+
+
+
+	<div class="row "
+		th:style="'background: url(/images/spa/spa7.jpg)  no-repeat;'">
+
+<div class="col-1"></div>
+		<div class="col-2  m-4 p-3">
+			<div class="card" style="width: 18rem;">
+				<img th:src="@{/images/spa/nail.jfif}"
+					style="width: 100%; height: 275px;" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title text-center">NAIL SERVICES</h5>
+					<p class="card-text h3 mb-5">
+					<h5>Signature Deluxe Manicure</h5>
+					<h6>45 min - $60.</h6>
+					<h5 class="mt-5">Signature Deluxe Pedicure</h5>
+					<h6>50 min - $80</h6>
+					</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col-2  m-4 p-3">
+			<div class="card" style="width: 18rem;">
+				<img th:src="@{/images/spa/massage.jfif}"
+					style="width: 100%; height: 275px;" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title text-center">MASSAGE TREATMENTS</h5>
+					<p class="card-text h3 mb-5">
+					<h5>MyMassage</h5>
+					<h6>50 min - $150 80 min - $195</h6>
+					<h5 class="mt-5">Prenatal</h5>
+					<h6>50 min - $150 80 min - $195</h6>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-2  m-4 p-3">
+			<div class="card" style="width: 18rem;">
+				<img th:src="@{/images/spa/facial.jfif}"
+					style="width: 100%; height: 275px;" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title text-center">FACIAL TREATMENTS</h5>
+					<p class="card-text h3 mb-5">
+					<h5>Signature HydraFacial MD</h5>
+					<h6>50 min - $199 80 min - $250</h6>
+
+					<h5 class="mt-5">Pro Collagen Age Facial</h5>
+					<h6>50 min - $165</h6>
+
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-2  m-4 p-3">
+			<div class="card" style="width: 18rem;">
+				<img th:src="@{/images/spa/hair.jfif}"
+					style="width: 100%; height: 275px;" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title text-center">HAIR & MAKEUP</h5>
+					<p class="card-text h3 mb-5">
+					<h5>Women’s Cut Or Style</h5>
+					<h6>From - $85</h6>
+					</p>
+					<h5 class="mt-5">Men’s Cut</h5>
+					<h6>From - $40</h6>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+</head>
+<body>
+	<div class="container">
+		<h3>
+			Dear <span th:text="${userName}"></span>
+		</h3>
+		<br />
+		<h4>
+			<b th:if="${canceled}"><font style="color: red">Your
+					reservation is canceled.</font></b> <b th:unless="${canceled}"><font
+				style="color: green">Your reservation is confirmed.</font></b> <br />Here
+			is your reservation details.
+		</h4>
+		<hr />
+		<table>
+			<tr>
+				<td><b>Reservation Number</b></td>
+				<td><span th:text="${reservationDetails.reservationId}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Guest Name</b></td>
+				<td><span th:text="${userName}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Check-in Date</b></td>
+				<td><span th:text="${reservationDetails.checkin_date}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Check-out Date</b></td>
+				<td><span th:text="${reservationDetails.checkout_date}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Room Type</b></td>
+				<td><span th:text="${roomDetails.roomtype}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Number of Rooms</b></td>
+				<td><span th:text="${reservationDetails.no_of_room_reserved}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Number of Adults</b></td>
+				<td><span th:text="${reservationDetails.no_of_adults}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Number of Children</b></td>
+				<td><span th:text="${reservationDetails.no_of_child}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Price per Night</b></td>
+				<td><span th:text="${roomDetails.roomrate}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Total Price (+5% tax)</b></td>
+				<td>$ <span
+					th:with="variable = ${roomDetails.roomrate}, 
+						controllerVar = ${reservationDetails.no_of_room_reserved},
+						noOfDays = ${reservationDetails.noOfDays}, 
+						cost = ${variable * controllerVar * noOfDays}, 
+						costwithtax=${cost * 0.05},
+						totalcost=${cost+costwithtax}">
+						<span th:text="${totalcost}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Payment Method</b></td>
+				<td><span th:text="${reservationDetails.paymentMethod}"></span></td>
+			</tr>
+			<tr>
+				<td><b>Card Info</b></td>
+				<td>****<span th:text="${reservationDetails.cardNumber}"></span></td>
+			</tr>
+
+		</table>
+		<hr />
+
+		<h4>Thank you for your business with us.</h4>
+		<h4>
+			Please email us at <a href="mailto:kumbhanin1@montclair.edu">kumbhanin1@montclair.edu</a>
+			for any questions. We are happy to connect with you and resolve your
+			queries.
+		</h4>
+	</div>
+</body>
+</html>

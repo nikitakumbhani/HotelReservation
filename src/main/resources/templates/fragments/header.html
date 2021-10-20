@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+</head>
+<body>
+	<header th:fragment="header">
+		<nav class="navbar firex-top navbar-expand-sm navbar-dark bg-dark ">
+			<div class="container">
+				<a class="navbar-brand" href='/'> <span class="h1">NikitaKumbhaniJAVA</span></a>
+				<ul class="navbar-nav">
+
+					<li class="navbar-item" th:if="${session.isUserLoggedIn}"><a
+						class="nav-link text-white" href='/myprofile'>My Profile</a></li>
+					<li class="navbar-item" th:if="${session.isUserLoggedIn}"><a
+						class="nav-link text-white" href='/logout'>Logout </a></li>
+					<li class="navbar-item" th:unless="${session.isUserLoggedIn}">
+						<a class="nav-link text-white" href='/login'>Login/Register </a>
+					</li>
+
+				</ul>
+			</div>
+		</nav>
+
+		<nav class="navbar navbar-expand-sm navbar-dark bg-dark ">
+			<div class="container">
+				<div class="navbar-brand text-white ml-2" href='#'>
+					<span class="h6"><i class="fa fa-phone" aria-hidden="true"></i>
+						+1 987-654-4321 &nbsp;&nbsp; <i class="fa fa-envelope"></i> <a
+						href="mailto:kumbhanin1@montclair.edu" class="text-white">kumbhanin1@montclair.edu</a>
+						&nbsp;&nbsp;<i class="fa fa-map-marker"></i> 1100 Parsippany Blvd,
+						Parsippany,NJ-07054</span>
+				</div>
+			</div>
+		</nav>
+
+
+
+		<ul class="nav justify-content-center bg-secondary sticky-top">
+
+			<li class="nav-item active"><a class="nav-link text-white"
+				href='/'>Home</a></li>
+			<li class="nav-item"><a class="nav-link text-white"
+				href='/dining'>Dining</a></li>
+			<li class="nav-item"><a class="nav-link text-white" href='/spa'>Spa</a></li>
+			<li class="nav-item"><a class="nav-link text-white"
+				href='/localattraction'>Attractions Near By</a></li>
+			<li class="nav-item"><a class="nav-link text-white"
+				href='/location'>Location <i class="fa fa-map-marker"></i></a></li>
+		</ul>
+	</header>
+</body>
+</html>

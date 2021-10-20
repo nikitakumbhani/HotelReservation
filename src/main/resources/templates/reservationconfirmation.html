@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Reservation Confirmation - NikitaKumbhaniJava</title>
+
+<script src="https://kit.fontawesome.com/d82da44153.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+
+	<div class="container bg-light bg-gradient">
+
+		<div class="row border ">
+			<div class="col-6 ">
+				<img class="img-fluid" th:src="@{/images/confirm1.jpg}">
+			</div>
+			<div class="col-6 h1 p-5 text-center mt-5">We Look Forward To
+				Seeing You</div>
+
+		</div>
+		<div class="mt-5">
+			Dear <b><label th:text="${userDetails.firstname}"> </label> <label
+				th:text="${userDetails.lastname}"></label>,</b>
+		</div>
+		<div class="mb-5">
+			Thank you for choosing Nikita's Hotel. It is our pleasure to confirm
+			the following reservation and we have sent details on your email id
+			at <b><span th:text="${userDetails.email}"></b></span>. please advise
+			us is any changes need to made to this reservation by calling us at
+			987-987-0987.
+		</div>
+
+		<div class="row border">
+			<div class="col-6 border">
+
+				<div class="row bg-secondary  text-light ">
+					<label class="h5 my-3 mx-3">Reservation Details</label>
+
+				</div>
+				<div class="row">
+					<div class="col-6 mt-4">Confirmation Number</div>
+					<div class="col-6 mt-4">
+						<label th:text="${reservationDetails.reservationId}"></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">Guest Name</div>
+					<div class="col-6">
+						<label th:text="${userDetails.firstname}"> </label> <label
+							th:text="${userDetails.lastname}"></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">Check-in Date</div>
+					<div class="col-6">
+						<label th:text="${reservationDetails.checkin_date}"></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">Check-out Date</div>
+					<div class="col-6">
+						<label th:text="${reservationDetails.checkout_date}"></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">Room Type</div>
+					<div class="col-6">
+						<label th:text="${roomDetails.roomtype}"></label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-6">No Of Rooms</div>
+					<div class="col-6">
+						<label th:text="${reservationDetails.no_of_room_reserved}"></label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">No Of Adults</div>
+					<div class="col-6">
+						<label th:text="${reservationDetails.no_of_adults}"></label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-6">No Of Children</div>
+					<div class="col-6">
+						<label th:text="${reservationDetails.no_of_child}"></label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-6">Room Rate</div>
+					<div class="col-6">
+						<label th:text="${roomDetails.roomrate}"></label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-6">Tax</div>
+					<div class="col-6">
+						<label>5%</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6 pb-3">Total Price</div>
+					<div class="col-6 pb-3">
+						$ <label
+							th:with="variable = ${roomDetails.roomrate}, 
+						controllerVar = ${reservationDetails.no_of_room_reserved}, 
+						noOfDays = ${reservationDetails.noOfDays}, 
+						cost = ${variable * controllerVar * noOfDays}, 
+						costwithtax=${cost * 0.05},
+						totalcost=${cost+costwithtax}">
+							<span th:text="${totalcost}"></span>
+						</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-6">Payment Method</div>
+					<div class="col-6">
+						<label th:text="${reservationDetails.paymentMethod}"></label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-6">Card Info</div>
+					<div class="col-6">
+						****<label th:text="${reservationDetails.cardNumber}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 border">
+
+				<div class="row bg-secondary  text-light ">
+					<label class="h5 my-3 mx-3">Policies</label>
+
+				</div>
+
+				<div class="row">
+					<div class="col-6 mt-4">
+						<label>Check-in time</label>
+					</div>
+					<div class="col-6 mt-4">
+						<label>11:00 AM</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<label>Check-Out time</label>
+					</div>
+					<div class="col-6">
+						<label>9:00 AM</label>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div class="my-4 h3">
+			To make advance reservation for dinner, Please refer our <a
+				href="/dining">Dining</a> service.
+		</div>
+
+		<hr />
+	</div>
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+</body>
+</html>

@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Available Rooms - NikitaKumbhaniJava</title>
+
+
+<script src="https://kit.fontawesome.com/d82da44153.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet" crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="css/blueimp-gallery.min.css" />
+
+
+
+
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+
+	<div class="container">
+
+		<!-- The Gallery as lightbox dialog, should be a document body child element -->
+		<div id="blueimp-gallery"
+			class="blueimp-gallery blueimp-gallery-controls"
+			aria-label="image gallery" aria-modal="true" role="dialog">
+			<div class="slides" aria-live="polite"></div>
+			<h3 class="title"></h3>
+			<a class="prev" aria-controls="blueimp-gallery"
+				aria-label="previous slide" aria-keyshortcuts="ArrowLeft"></a> <a
+				class="next" aria-controls="blueimp-gallery" aria-label="next slide"
+				aria-keyshortcuts="ArrowRight"></a> <a class="close"
+				aria-controls="blueimp-gallery" aria-label="close"
+				aria-keyshortcuts="Escape"></a> <a class="play-pause"
+				aria-controls="blueimp-gallery" aria-label="play slideshow"
+				aria-keyshortcuts="Space" aria-pressed="false" role="button"></a>
+			<ol class="indicator"></ol>
+		</div>
+
+		<!-- <div class="col-md-4">
+			<div id="links" style="height:300px">
+				<a href="images/room1/room1.jpg" class="room1" title="Banana"> <img
+					src="images/room1/room1.jpg" width="300px" />
+				</a> <a href="images/room1/room2.jpg" class="room1" title="Apple"> <img
+					src="images/room1/room2.jpg" style="visibility: hidden" />
+				</a>
+
+			</div>
+		</div>
+ -->
+
+		<div th:if="${availablerooms.isEmpty()}"
+			class="my-5 p-3 text-center h5 bg-light text-danger border border-danger">
+			Sorry, We don't have rooms for the date you have selected.<br>
+			please choose another date for your reservation.
+		</div>
+
+
+
+		<div class=" row bg-light mt-5  border-info"
+			th:each="room:${availablerooms}">
+			<div class="col-md-4 ">
+				<div th:id="room + ${room.roomId}" class="imageSlider">
+					<div th:each="photo, status : ${room.photopath}">
+
+						<div th:if="${status.first}">
+							<a th:href="images + ${photo}" th:class="room + ${room.roomId}">
+								<img th:src="images + ${photo}" width="100%" height="100%" />
+							</a>
+						</div>
+
+						<div th:if="${!status.first}">
+							<a th:href="images + ${photo}" th:class="room + ${room.roomId}">
+								<img th:src="images + ${photo}" style="display: none" />
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 card-body">
+				<div class="mt-2 d-title h3 font-weight-bold"
+					th:text="${room.roomtype}"></div>
+				<div>
+					<i class="far fa-square"></i> <label th:text="${room.roomarea}"></label>
+					sq ft
+				</div>
+				<div>
+					<i class="fas fa-user"></i> Sleeps <label
+						th:text="${room.noofoccupants}"></label>
+				</div>
+				<div>
+					<i class="fas fa-bed"></i> <label th:text="${room.noofbeds}"></label>
+					King Bed
+				</div>
+
+
+				<div class="accordion" id="accordion">
+					<div id="headingThree">
+
+						<button class="btn btn-link collapsed" data-toggle="collapse"
+							th:attr="data-target='#collapse_'+${room.roomId}"
+							aria-expanded="false" aria-controls="collapse">more
+							details...</button>
+
+						<div th:id="'collapse_'+${room.roomId}" class="collapse"
+							aria-labelledby="headingThree" data-parent="#accordion">
+
+							<div class="row tm-5 ">
+								<div class="col-6">
+									<div class="h6 my-4">
+										<i class="far fa-star"></i> Room Features <i
+											class="far fa-star"></i>
+									</div>
+
+									<div>
+										<i class="fas fa-wifi"></i> Free Wi-Fi
+									</div>
+									<div>
+										<i class="fas fa-tv"></i> LCD TV
+									</div>
+									<div>
+										<i class="far fa-check-square"></i> Air-Conditioned
+									</div>
+									<div>
+										<i class="fas fa-check"></i> Reserve Now, pay later
+									</div>
+									<div>Hair Drier</div>
+									<div>Iron</div>
+								</div>
+								<div class="col-6">
+
+									<div class="h6 my-4">
+										<i class="far fa-star"></i> Food and Beverages <i
+											class="far fa-star"></i>
+									</div>
+
+									<div>Free breakfast</div>
+									<div>Coffee Maker</div>
+									<div>Tea Service</div>
+									<div>Bottled water, for a fee</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="col-md-2 d-flex align-items-end flex-column p-2 card-body font-weight-bold h3">
+
+				<div class="mt-4">
+					$<label th:text="${room.roomrate}"></label>
+				</div>
+				<div class="mt-5">
+					<form method="post" th:action="@{/reserve}">
+						<button type="submit" name="roomid" th:value="${room.roomId}"
+							class="btn btn-success  active form-control align-bottom">
+							Reserve</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div th:if="${extraavailablerooms.isEmpty()}"></div>
+		<div th:unless="${extraavailablerooms.isEmpty()}">
+
+			<div
+				class="mb-5 mt-5 p-3 h5 text-center bg-light text-info border border-info">You
+				may be interested in following rooms</div>
+
+
+			<div class=" row  bg-light my-3  border-info"
+				th:each="room:${extraavailablerooms}">
+				<div class="col-md-4 ">
+					<div th:id="room + ${room.roomId}" class="imageSlider">
+						<div th:each="photo, status : ${room.photopath}">
+
+							<div th:if="${status.first}">
+								<a th:href="images + ${photo}" th:class="room + ${room.roomId}">
+									<img class="" th:src="images + ${photo}" width="100%"
+									height="100%" />
+								</a>
+							</div>
+
+							<div th:if="${!status.first}">
+								<a th:href="images + ${photo}" th:class="room + ${room.roomId}">
+									<img th:src="images + ${photo}" style="display: none" />
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6 card-body">
+					<div class="mt-2 d-title h3 font-weight-bold"
+						th:text="${room.roomtype}"></div>
+					<div>
+						<i class="far fa-square"></i> <label th:text="${room.roomarea}"></label>
+						sq ft
+					</div>
+					<div>
+						<i class="fas fa-user"></i> Sleeps <label
+							th:text="${room.noofoccupants}"></label>
+					</div>
+					<div>
+						<i class="fas fa-bed"></i> <label th:text="${room.noofbeds}"></label>
+						King Bed
+					</div>
+
+
+					<div class="accordion" id="accordion">
+						<div id="headingThree">
+
+							<button class="btn btn-link collapsed" data-toggle="collapse"
+								th:attr="data-target='#collapse_'+${room.roomId}"
+								aria-expanded="false" aria-controls="collapse">more
+								details...</button>
+
+							<div th:id="'collapse_'+${room.roomId}" class="collapse"
+								aria-labelledby="headingThree" data-parent="#accordion">
+
+								<div class="row tm-5 ">
+									<div class="col-6">
+										<div class="h6 my-4">
+											<i class="far fa-star"></i> Room Features <i
+												class="far fa-star"></i>
+										</div>
+
+										<div>
+											<i class="fas fa-wifi"></i> Free Wi-Fi
+										</div>
+										<div>
+											<i class="fas fa-tv"></i> LCD TV
+										</div>
+										<div>
+											<i class="far fa-check-square"></i> Air-Conditioned
+										</div>
+										<div>
+											<i class="fas fa-check"></i> Reserve Now, pay later
+										</div>
+										<div>Hair Drier</div>
+										<div>Iron</div>
+									</div>
+									<div class="col-6">
+
+										<div class="h6 my-4">
+											<i class="far fa-star"></i> Food and Beverages <i
+												class="far fa-star"></i>
+										</div>
+
+										<div>Free breakfast</div>
+										<div>Coffee Maker</div>
+										<div>Tea Service</div>
+										<div>Bottled water, for a fee</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="col-md-2 d-flex align-items-end flex-column p-2 card-body font-weight-bold h3">
+
+					<div class="mt-4">
+						$<label th:text="${room.roomrate}"></label>
+					</div>
+					<div class="mt-5">
+						<form method="post" th:action="@{/reserve}">
+							<button type="submit" name="roomid" th:value="${room.roomId}"
+								class="btn btn-success  active form-control align-bottom">
+								Reserve</button>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<script src="js/blueimp-gallery.min.js"></script>
+		<script>
+			/* document.getElementById('links').onclick = function(event) {
+				event = event || window.event
+				var target = event.target || event.srcElement;
+				console.log(target);
+				var link = target.src ? target.parentNode : target;
+				console.log($(link).attr('class'));
+				var clickedElementClassName = $(link).attr('class');
+				var options = {
+					index : link,
+					event : event
+				}
+				var links = $('.'+clickedElementClassName);//this.getElementsByTagName('a')
+				console.log(links);
+				blueimp.Gallery(links, options)
+			} */
+
+			$(document).on(
+					"click",
+					"img",
+					function(event) {
+						event = event || window.event;
+						var target = event.target || event.srcElement;
+						//console.log(target);
+						var link = target.src ? target.parentNode : target;
+						//console.log($(link).attr('class'));
+						var clickedElementClassName = $(link).attr('class');
+
+						blueimp.Gallery(document.getElementById(
+								clickedElementClassName).getElementsByTagName(
+								'a'), {
+							container : '#blueimp-gallery',
+							carousel : true
+						});
+
+						return false;
+					});
+
+			/* blueimp.Gallery(document.getElementById('room1').getElementsByTagName('a'), {
+			    container: '#blueimp-gallery',
+			    carousel: true
+			  }); */
+		</script>
+
+	</div>
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+
+
+</body>
+</html>

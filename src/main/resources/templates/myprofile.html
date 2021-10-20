@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>My Profile - NikitaKumbhaniJava</title>
+
+
+<script th:src="@{https://kit.fontawesome.com/d82da44153.js}"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet" crossorigin="anonymous">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+	<div class="contaier">
+		<div class="row mt-5">
+			<div class="col-2"></div>
+
+
+
+			<div class="col-8">
+				<div
+					class="my-2 mb-5 p-3 h5 text-center bg-light text-danger border border-secondary"
+					th:if="${isReservationCanceled}">
+					Your reservation number <span th:text="${canceledReservation}"></span>
+					is canceled successfully.
+				</div>
+				<h2>Profile Details</h2>
+				<hr>
+				<div class=" bg-light text-dark">
+
+					<div class="row mt-3 pt-3 px-4">
+						<div class="col-2 font-weight-bold text-align-right">First
+							Name :</div>
+						<div class="col-10" th:text=${loginDetails.firstname}></div>
+
+					</div>
+
+					<div class="row mt-3 px-4">
+
+						<div class="col-2 font-weight-bold text-align-right">Last
+							Name :</div>
+						<div class="col-6">
+							<span th:text=${loginDetails.lastname}></span>
+						</div>
+					</div>
+
+					<div class="row mt-3 px-4">
+						<div class="col-2 font-weight-bold text-align-right">Email :
+						</div>
+						<div class="col-6">
+							<span th:text=${loginDetails.email}></span>
+						</div>
+					</div>
+
+					<div class="row my-3 px-4">
+						<div class="col-2 font-weight-bold text-align-right">Phone :
+						</div>
+						<div class="col-2">
+							<span th:text=${loginDetails.phone}></span>
+						</div>
+					</div>
+
+					<div class="row mt-3 px-4">
+						<div class="col-2 font-weight-bold text-align-right">Street
+							:</div>
+						<div class="col-6">
+							<span th:text=${loginDetails.street}></span>
+						</div>
+					</div>
+
+					<div class="row mt-3 px-4">
+						<div class="col-2 font-weight-bold text-align-right">City :
+						</div>
+						<div class="col-6">
+							<span th:text=${loginDetails.city}></span>
+						</div>
+					</div>
+
+
+					<div class="row mt-3 px-4">
+						<div class="col-2 font-weight-bold text-align-right">State :</div>
+						<div class="col-6">
+							<span th:text=${loginDetails.state}></span>
+						</div>
+					</div>
+
+					<div class="row mt-3 pb-3 px-4">
+						<div class="col-2 font-weight-bold text-align-right">Country
+							:</div>
+						<div class="col-6">
+							<span th:text=${loginDetails.country}></span>
+						</div>
+					</div>
+
+
+
+				</div>
+				<hr />
+				<h2>Reservation Details</h2>
+				<hr />
+				<table class="table table-bordered table-striped table-hover">
+					<thead class="thead-light">
+						<tr>
+							<th width="18%">Reservation Number</th>
+							<th width="15%">Check-in Date</th>
+							<th width="15%">Check-out Date</th>
+							<th width="15%">Room Rate</th>
+							<th width="15%">Total Cost</th>
+							<th width="15%"></th>
+						</tr>
+					</thead>
+
+					<div th:if="${reservationDetails == null}">
+						<td colspan="6" align="center" style="color: red;">No
+							Reservation Found!</td>
+					</div>
+					<div th:unless="${reservationDetails == null}">
+						<tr th:each="reservation : ${reservationDetails}">
+
+							<td><span th:text="${reservation.reservationId}"></span></td>
+							<td><span th:text="${reservation.checkin_date}"></span></td>
+							<td><span th:text="${reservation.checkout_date}"></span></td>
+							<td>$ <span th:text="${reservation.roomRate}"></span></td>
+							<td>$ <span th:text="${reservation.totalCost}"></span></td>
+
+							<td><form method="post" th:action="@{/myprofile}">
+									<button type="submit" th:value="${reservation.reservationId}"
+										name="reservationId" class="btn btn-danger">Cancel</button>
+								</form></td>
+
+						</tr>
+					</div>
+
+				</table>
+
+				<hr />
+			</div>
+			<div class="col-2"></div>
+
+		</div>
+	</div>
+	<footer th:insert="fragments/footer.html :: footer"> </footer>
+
+</body>
+</html>

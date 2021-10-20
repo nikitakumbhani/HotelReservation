@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Local Attraction - NikitaKumbhaniJava</title>
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous" />
+
+<script th:src="@{https://kit.fontawesome.com/d82da44153.js}"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
+<style>
+.attractionimage {
+	max-width: 80%;
+	height: 10%
+}
+</style>
+</head>
+<body>
+	<header th:insert="fragments/header.html :: header"> </header>
+	<div class="container mb-5">
+		<div class=" text-center text-secondary h1 mt-5">Attractions
+			Near Our Hotel</div>
+		<div class="row mt-5">
+			<div class="col-md-4">
+				<div>
+					<img class="img-fluid " th:src="@{/images/la1.jpg}"
+						alt="TopOfTheRock">
+				</div>
+				<div class="text-center text-secondary h4 mt-5">TOP OF THE
+					ROCK</div>
+				<div class="mt-3">See NYC from 70 floors up. Believe the hype. Soaring 70
+					floors above New York City, Top of the Rock’s three levels of
+					indoor and outdoor observation decks deliver spectacular,
+					unobstructed 360-degree views of the city skyline. No matter the
+					weather or the time of year, no trip to NYC is complete without a
+					visit to the ultimate observation deck.</div>
+			</div>
+			<div class="col-md-4 ">
+				<img class="img-fluid" th:src="@{/images/la3.jfif}"
+					alt="statue of liberty" style="height: 56%">
+				<div class="text-center text-secondary h4 mt-5">LONG ISLAND BEACH</div>
+				<div class="mt-3">Long Island is an expansive, densely populated island in
+					southeastern New York State, stretching east from New York City.
+					Along its Atlantic coast are Jones Beach State Park, Fire Island
+					and Montauk Point State Park, the latter home to the late-1700s
+					Montauk Lighthouse. On the east end, the North Fork is home to
+					wineries and the Hamptons are towns characterized by upscale homes,
+					trendy restaurants and antiques shops.</div>
+			</div>
+			<div class="col-md-4 ">
+				<img class="img-fluid " th:src="@{/images/la6.jpg}"
+					alt="TopOfTheRock" style="height: 56%">
+				<div class="text-center text-secondary h4 mt-5">STATUE OF
+					LIBERTY</div>
+				<div class="mt-3">The Statue of Liberty Enlightening the World" was a gift
+					of friendship from the people of France to the United States and is
+					recognized as a universal symbol of freedom and democracy. The
+					Statue of Liberty was dedicated on October 28, 1886. It was
+					designated as a National Monument in 1924. Employees of the
+					National Park Service have been caring for the colossal copper
+					statue since 1933.</div>
+			</div>
+
+
+		</div>
+
+
+
+	</div>
+			<footer th:insert="fragments/footer.html :: footer"> </footer>
+	
+</body>
+</html>
